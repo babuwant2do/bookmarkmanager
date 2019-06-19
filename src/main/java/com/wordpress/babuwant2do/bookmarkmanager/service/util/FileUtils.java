@@ -1,6 +1,7 @@
 package com.wordpress.babuwant2do.bookmarkmanager.service.util;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,6 +30,13 @@ public class FileUtils {
 		}
 		return null;
 	}
+	
+	public static void writeToFile(String filename, String content) throws IOException{
+            FileWriter fw=new FileWriter("/Users/mohammedali/Downloads/bookmarks/upload_x/"+ filename);    
+            fw.write(content);    
+            fw.close();    
+            
+    }
 	
 	public static synchronized boolean isFileExists(String path){
 		File directory = new File(path);
