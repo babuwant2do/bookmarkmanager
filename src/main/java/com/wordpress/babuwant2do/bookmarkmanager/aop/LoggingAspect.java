@@ -49,9 +49,6 @@ public class LoggingAspect {
 	
 	@Around("applicationPackagePointcut() && springBeanPointcut()")
 	public Object logAfterExceptonAround(ProceedingJoinPoint joinPoint) throws Throwable{
-//		System.out.println("**************");
-//		this.log.info("INFOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-//		this.log.debug("DEBUGGGGGG ");
 		  log.info("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
 	                joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
 		 try {
