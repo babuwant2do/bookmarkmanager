@@ -1,8 +1,10 @@
 package com.wordpress.babuwant2do.bookmarkmanager.service.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
@@ -14,13 +16,29 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUtils {
 	 private static final Logger log = LoggerFactory.getLogger(FileUtils.class);
 
+	private static String tempfileDir =  "/Users/mohammedali/Downloads/bookmarks/upload_x/";
+	 
+	public static byte[] getFileAsByteArr(String filePath){
+        File initialFile = new File(filePath);
+	    InputStream targetStream;
+		try {
+			targetStream = new FileInputStream(initialFile);
+			byte[] contents = org.apache.commons.io.IOUtils.toByteArray(targetStream);
+			log.debug("REST request to exportPdf PdfArchive : ALL OK , JUST TO RETURN !!");
+			return contents;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+        }
+        return null;
+    }
 	
 	public static synchronized File saveFile(MultipartFile file){
 		try {
 			
-			File dir = FileUtils.createDirIfNotExists("/Users/mohammedali/Downloads/bookmarks/upload_x");
+			//File dir = FileUtils.createDirIfNotExists(tempfileDir);
 			String fileName = UUID.randomUUID().toString()+".html";
-              String fileAbsulatePath =  dir.getPath() +"/" + fileName;
+              String fileAbsulatePath =  tempfileDir + fileName;
               File newFile = new File(fileAbsulatePath);
               file.transferTo(newFile);
 			
@@ -31,8 +49,9 @@ public class FileUtils {
 		return null;
 	}
 	
+
 	public static void writeToFile(String filename, String content) throws IOException{
-            FileWriter fw=new FileWriter("/Users/mohammedali/Downloads/bookmarks/upload_x/"+ filename);    
+            FileWriter fw=new FileWriter(tempfileDir+ filename);    
             fw.write(content);    
             fw.close();    
             
